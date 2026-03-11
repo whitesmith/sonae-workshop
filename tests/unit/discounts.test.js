@@ -6,9 +6,9 @@ import {
 
 describe('validateDiscount', () => {
   it('returns discount for valid code', () => {
-    const result = validateDiscount('SONAE10');
+    const result = validateDiscount('FRESH10');
     expect(result).toEqual({
-      code: 'SONAE10',
+      code: 'FRESH10',
       type: 'percentage',
       value: 10,
       label: '10% off',
@@ -16,9 +16,9 @@ describe('validateDiscount', () => {
   });
 
   it('is case insensitive', () => {
-    const result = validateDiscount('sonae10');
+    const result = validateDiscount('fresh10');
     expect(result).not.toBeNull();
-    expect(result.code).toBe('SONAE10');
+    expect(result.code).toBe('FRESH10');
   });
 
   it('returns null for invalid code', () => {

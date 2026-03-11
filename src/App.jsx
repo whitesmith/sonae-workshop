@@ -83,7 +83,7 @@ export default function App() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-900">
-            SONAE Shopping List
+            Fresh Cart
           </h1>
           <span className="text-sm text-gray-500">
             {cart.items.length} item{cart.items.length !== 1 ? 's' : ''} in cart

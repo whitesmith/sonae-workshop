@@ -1,5 +1,5 @@
 const DISCOUNT_CODES = {
-  SONAE10: { type: 'percentage', value: 10, label: '10% off' },
+  FRESH10: { type: 'percentage', value: 10, label: '10% off' },
   FRESH20: { type: 'percentage', value: 20, label: '20% off' },
   SAVE5: { type: 'fixed', value: 5, label: '€5 off' },
 };

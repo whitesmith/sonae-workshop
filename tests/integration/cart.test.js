@@ -45,7 +45,7 @@ describe('Cart API', () => {
       .send({ productId: 1, quantity: 1 });
     const res = await request(app)
       .post('/api/cart/discount')
-      .send({ code: 'SONAE10' });
+      .send({ code: 'FRESH10' });
     expect(res.status).toBe(200);
     expect(res.body.discount).not.toBeNull();
     expect(res.body.discountAmount).toBeGreaterThan(0);
@@ -65,7 +65,7 @@ describe('Cart API', () => {
       .send({ productId: 1, quantity: 1 });
     await request(app)
       .post('/api/cart/discount')
-      .send({ code: 'SONAE10' });
+      .send({ code: 'FRESH10' });
     const res = await request(app).delete('/api/cart/discount');
     expect(res.status).toBe(200);
     expect(res.body.discount).toBeNull();

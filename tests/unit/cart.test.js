@@ -70,7 +70,7 @@ describe('Cart Service', () => {
     it('applies discount to total', () => {
       cartService.addItem(1, 2); // 1.98
       cartService.addItem(5, 1); // 1.29 = subtotal 3.27
-      cartService.applyDiscount('SONAE10'); // 10% off
+      cartService.applyDiscount('FRESH10'); // 10% off
       const cart = cartService.getCart();
       expect(cart.subtotal).toBe(3.27);
       expect(cart.discountAmount).toBe(0.33);
@@ -81,9 +81,9 @@ describe('Cart Service', () => {
   describe('applyDiscount', () => {
     it('applies valid discount code', () => {
       cartService.addItem(1, 1);
-      const cart = cartService.applyDiscount('SONAE10');
+      const cart = cartService.applyDiscount('FRESH10');
       expect(cart.discount).not.toBeNull();
-      expect(cart.discount.code).toBe('SONAE10');
+      expect(cart.discount.code).toBe('FRESH10');
     });
 
     it('rejects invalid discount code', () => {
@@ -96,7 +96,7 @@ describe('Cart Service', () => {
   describe('removeDiscount', () => {
     it('removes applied discount', () => {
       cartService.addItem(1, 1);
-      cartService.applyDiscount('SONAE10');
+      cartService.applyDiscount('FRESH10');
       const cart = cartService.removeDiscount();
       expect(cart.discount).toBeNull();
       expect(cart.discountAmount).toBe(0);
