@@ -5,6 +5,7 @@ class Store {
 
   reset() {
     this.cart = { items: [], discount: null };
+    this.favorites = [];
   }
 }
 

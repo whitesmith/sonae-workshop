@@ -63,9 +63,7 @@ describe('Cart API', () => {
     await request(app)
       .post('/api/cart/items')
       .send({ productId: 1, quantity: 1 });
-    await request(app)
-      .post('/api/cart/discount')
-      .send({ code: 'FRESH10' });
+    await request(app).post('/api/cart/discount').send({ code: 'FRESH10' });
     const res = await request(app).delete('/api/cart/discount');
     expect(res.status).toBe(200);
     expect(res.body.discount).toBeNull();

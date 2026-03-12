@@ -1,6 +1,19 @@
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({
+  product,
+  onAdd,
+  isFavorite,
+  onToggleFavorite,
+}) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center hover:shadow-md transition-shadow relative">
+      <button
+        onClick={onToggleFavorite}
+        className={`absolute top-2 right-2 text-xl transition-colors ${
+          isFavorite ? 'text-red-500' : 'text-gray-300 hover:text-gray-400'
+        }`}
+      >
+        {isFavorite ? '\u2665' : '\u2661'}
+      </button>
       <span className="text-5xl mb-3">{product.emoji}</span>
       <h3 className="font-medium text-gray-900">{product.name}</h3>
       <p className="text-gray-500 text-sm mb-3">{product.category}</p>

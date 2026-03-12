@@ -1,11 +1,14 @@
 import ProductCard from './ProductCard';
 
-export default function ProductGrid({ products, onAddToCart }) {
+export default function ProductGrid({
+  products,
+  onAddToCart,
+  favorites,
+  onToggleFavorite,
+}) {
   if (products.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
-        No products found.
-      </div>
+      <div className="text-center py-12 text-gray-500">No products found.</div>
     );
   }
 
@@ -16,6 +19,8 @@ export default function ProductGrid({ products, onAddToCart }) {
           key={product.id}
           product={product}
           onAdd={() => onAddToCart(product.id)}
+          isFavorite={favorites.includes(product.id)}
+          onToggleFavorite={() => onToggleFavorite(product.id)}
         />
       ))}
     </div>

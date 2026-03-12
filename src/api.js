@@ -35,4 +35,9 @@ export const api = {
       body: JSON.stringify({ code }),
     }),
   removeDiscount: () => request('/cart/discount', { method: 'DELETE' }),
+  getFavorites: () => request('/favorites'),
+  addFavorite: (productId) =>
+    request(`/favorites/${productId}`, { method: 'POST' }),
+  removeFavorite: (productId) =>
+    request(`/favorites/${productId}`, { method: 'DELETE' }),
 };
