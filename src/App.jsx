@@ -18,6 +18,7 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState([]);
 
   const fetchCart = useCallback(async () => {
     const data = await api.getCart();
@@ -26,12 +27,14 @@ export default function App() {
 
   useEffect(() => {
     async function init() {
-      const [prods, cats] = await Promise.all([
+      const [prods, cats, favs] = await Promise.all([
         api.getProducts(),
         api.getCategories(),
+        api.getFavorites(),
       ]);
       setProducts(prods);
       setCategories(cats);
+      setFavorites(favs.map((p) => p.id));
       await fetchCart();
       setLoading(false);
     }
@@ -39,11 +42,31 @@ export default function App() {
   }, [fetchCart]);
 
   useEffect(() => {
+    if (category === '__favorites__') return;
     const params = {};
     if (search) params.search = search;
     if (category) params.category = category;
     api.getProducts(params).then(setProducts);
   }, [search, category]);
+
+  useEffect(() => {
+    if (category !== '__favorites__') return;
+    const params = {};
+    if (search) params.search = search;
+    api.getProducts(params).then((prods) => {
+      setProducts(prods.filter((p) => favorites.includes(p.id)));
+    });
+  }, [category, search, favorites]);
+
+  const toggleFavorite = async (productId) => {
+    if (favorites.includes(productId)) {
+      await api.removeFavorite(productId);
+      setFavorites((prev) => prev.filter((id) => id !== productId));
+    } else {
+      await api.addFavorite(productId);
+      setFavorites((prev) => [...prev, productId]);
+    }
+  };
 
   const addToCart = async (productId) => {
     const data = await api.addToCart(productId);
@@ -82,9 +105,7 @@ export default function App() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Fresh Cart
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900">Fresh Cart</h1>
           <span className="text-sm text-gray-500">
             {cart.items.length} item{cart.items.length !== 1 ? 's' : ''} in cart
           </span>
@@ -100,9 +121,15 @@ export default function App() {
                 categories={categories}
                 selected={category}
                 onChange={setCategory}
+                favoritesCount={favorites.length}
               />
             </div>
-            <ProductGrid products={products} onAddToCart={addToCart} />
+            <ProductGrid
+              products={products}
+              onAddToCart={addToCart}
+              favorites={favorites}
+              onToggleFavorite={toggleFavorite}
+            />
           </div>
 
           <div className="w-96 flex-shrink-0">
